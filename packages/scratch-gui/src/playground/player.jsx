@@ -61,4 +61,5 @@ const WrappedPlayer = compose(
 const appTarget = document.createElement('div');
 document.body.appendChild(appTarget);
 
-ReactDOM.render(<WrappedPlayer isPlayerOnly />, appTarget);
+const root = ReactDOM.createRoot(appTarget);
+root.render(<WrappedPlayer isPlayerOnly />);

@@ -32,4 +32,5 @@ const App = AppStateHOC(HashParserHOC(BlocksOnly));
 const appTarget = document.createElement('div');
 document.body.appendChild(appTarget);
 
-ReactDOM.render(<App />, appTarget);
+const root = ReactDOM.createRoot(appTarget);
+root.render(<App />);

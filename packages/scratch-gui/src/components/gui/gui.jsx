@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import omit from 'lodash.omit';
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
@@ -58,6 +58,7 @@ const messages = defineMessages({
 let isRendererSupported = null;
 
 const GUIComponent = props => {
+    const intl = useIntl();
     const {
         accountMenuOptions,
         accountNavOpen,
@@ -89,7 +90,6 @@ const GUIComponent = props => {
         costumesTabVisible,
         debugModalVisible,
         enableCommunity,
-        intl,
         isCreating,
         isFullScreen,
         isPlayerOnly,
@@ -434,7 +434,6 @@ GUIComponent.propTypes = {
     costumesTabVisible: PropTypes.bool,
     debugModalVisible: PropTypes.bool,
     enableCommunity: PropTypes.bool,
-    intl: intlShape.isRequired,
     isCreating: PropTypes.bool,
     isFullScreen: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
@@ -520,7 +519,7 @@ const mapDispatchToProps = dispatch => ({
     setPlatform: platform => dispatch(setPlatform(platform))
 });
 
-export default injectIntl(connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(GUIComponent));
+)(GUIComponent);

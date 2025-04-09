@@ -26,6 +26,7 @@ if (supportedBrowser()) {
     BrowserModalComponent.setAppElement(appTarget);
     const WrappedBrowserModalComponent = AppStateHOC(BrowserModalComponent, true /* localesOnly */);
     const handleBack = () => {};
+    const root = ReactDOM.createRoot(appTarget);
     // eslint-disable-next-line react/jsx-no-bind
-    ReactDOM.render(<WrappedBrowserModalComponent onBack={handleBack} />, appTarget);
+    root.render(<WrappedBrowserModalComponent onBack={handleBack} />);
 }
