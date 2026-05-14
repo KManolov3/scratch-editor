@@ -42,6 +42,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             storage.setProjectHost?.(props.projectHost);
             storage.setProjectToken?.(props.projectToken);
             storage.setAssetHost?.(props.assetHost);
+            if (props.libraryAssetHost) {
+                storage.setLibraryAssetHost?.(props.libraryAssetHost);
+            }
             storage.setTranslatorFunction?.(props.intl.formatMessage);
 
             // props.projectId might be unset, in which case we use our default;
@@ -67,6 +70,11 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
             if (prevProps.assetHost !== this.props.assetHost) {
                 storage.setAssetHost?.(this.props.assetHost);
+            }
+            if (prevProps.libraryAssetHost !== this.props.libraryAssetHost) {
+                if (this.props.libraryAssetHost) {
+                    storage.setLibraryAssetHost?.(this.props.libraryAssetHost);
+                }
             }
             if (this.props.isFetchingWithId && !prevProps.isFetchingWithId) {
                 this.fetchProject(this.props.reduxProjectId, this.props.loadingState);
@@ -103,6 +111,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 assetHost,
                 intl,
                 isLoadingProject: isLoadingProjectProp,
+                libraryAssetHost,
                 loadingState,
                 onActivateTab,
                 onError: onErrorProp,
@@ -134,6 +143,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         isFetchingWithId: PropTypes.bool,
         isLoadingProject: PropTypes.bool,
         isShowingProject: PropTypes.bool,
+        libraryAssetHost: PropTypes.string,
         loadingState: PropTypes.oneOf(LoadingStates),
         onActivateTab: PropTypes.func,
         onError: PropTypes.func,

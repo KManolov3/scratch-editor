@@ -13,6 +13,8 @@ export class LegacyStorage implements GUIStorage {
     private assetHost?: string;
     private translator?: TranslatorFunction;
 
+    libraryAssetHost = 'https://cdn.assets.scratch.mit.edu';
+
     readonly scratchStorage = new ScratchStorage();
     readonly backpackStorage = new LegacyBackpackStorage({
         readAuth (session) {
@@ -65,6 +67,10 @@ export class LegacyStorage implements GUIStorage {
 
     setAssetHost (host: string): void {
         this.assetHost = host;
+    }
+
+    setLibraryAssetHost (host: string): void {
+        this.libraryAssetHost = host;
     }
 
     setTranslatorFunction (translator: TranslatorFunction): void {

@@ -58,6 +58,7 @@ class BackdropLibrary extends React.Component {
             <LibraryComponent
                 data={mergedAssets}
                 id="backdropLibrary"
+                libraryAssetHost={this.props.libraryAssetHost}
                 tags={backdropTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelect}
@@ -68,12 +69,14 @@ class BackdropLibrary extends React.Component {
 };
 
 const mapStateToProps = state => ({
-    dynamicBackdrops: state.scratchGui.dynamicAssets.backdrops
+    dynamicBackdrops: state.scratchGui.dynamicAssets.backdrops,
+    libraryAssetHost: state.scratchGui.config.storage.libraryAssetHost
 });
 
 BackdropLibrary.propTypes = {
     dynamicBackdrops: PropTypes.arrayOf(costumeShape),
     intl: intlShape.isRequired,
+    libraryAssetHost: PropTypes.string,
     onRequestClose: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired
 };

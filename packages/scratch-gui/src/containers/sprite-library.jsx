@@ -54,6 +54,7 @@ class SpriteLibrary extends React.PureComponent {
             <LibraryComponent
                 data={data}
                 id="spriteLibrary"
+                libraryAssetHost={this.props.libraryAssetHost}
                 tags={spriteTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelect}
@@ -64,12 +65,14 @@ class SpriteLibrary extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-    dynamicSprites: state.scratchGui.dynamicAssets.sprites
+    dynamicSprites: state.scratchGui.dynamicAssets.sprites,
+    libraryAssetHost: state.scratchGui.config.storage.libraryAssetHost
 });
 
 SpriteLibrary.propTypes = {
     dynamicSprites: PropTypes.arrayOf(spriteShape),
     intl: intlShape.isRequired,
+    libraryAssetHost: PropTypes.string,
     onActivateBlocksTab: PropTypes.func.isRequired,
     onRequestClose: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired

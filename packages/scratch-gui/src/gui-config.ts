@@ -18,8 +18,15 @@ export interface GUIStorage {
     setProjectToken?(token: string): void;
     setProjectMetadata?(projectId: string | null | undefined): void;
     setAssetHost?(host: string): void;
+    setLibraryAssetHost?(host: string): void;
     setTranslatorFunction?(formatMessageFn: TranslatorFunction): void;
     setBackpackHost?(host: string): void;
+
+    /**
+     * The base URL used to fetch library asset thumbnails (sprites, costumes, backdrops).
+     * Implementations should provide a sensible default (e.g. the same host used for other assets).
+     */
+    libraryAssetHost: string;
 
     saveProject(
         projectId: ProjectId | null | undefined,
@@ -205,8 +212,11 @@ export const GUIStoragePropType = PropTypes.shape({
     setProjectToken: PropTypes.func,
     setProjectMetadata: PropTypes.func,
     setAssetHost: PropTypes.func,
+    setLibraryAssetHost: PropTypes.func,
     setTranslatorFunction: PropTypes.func,
     setBackpackHost: PropTypes.func,
+
+    libraryAssetHost: PropTypes.string.isRequired,
 
     saveProject: PropTypes.func.isRequired,
 

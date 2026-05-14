@@ -89,12 +89,13 @@ const getAssetTypeForFileExtension = function (fileExtension) {
  * Otherwise it'll return just one `imageSource`.
  * @param {object} item - either a library item or one of a library item's costumes.
  *   The latter is used internally as part of processing an animated thumbnail.
+ * @param {string} libraryAssetHost - the base URL for library asset thumbnails.
  * @returns {LibraryItem.PropTypes.icons} - an `imageSource` or array of them
  */
-const getItemIcons = function (item) {
+const getItemIcons = function (item, libraryAssetHost) {
     const costumes = (item.json && item.json.costumes) || item.costumes;
     if (costumes) {
-        return costumes.map(getItemIcons);
+        return costumes.map(costume => getItemIcons(costume, libraryAssetHost));
     }
 
     if (item.rawURL) {
@@ -107,7 +108,7 @@ const getItemIcons = function (item) {
         return {
             assetId: item.assetId,
             assetType: getAssetTypeForFileExtension(item.dataFormat),
-            assetServiceUri: `https://cdn.assets.scratch.mit.edu/internalapi/asset/${item.assetId}.${item.dataFormat}/get/`
+            assetServiceUri: `${libraryAssetHost}/internalapi/asset/${item.assetId}.${item.dataFormat}/get/`
         };
     }
 
@@ -117,7 +118,7 @@ const getItemIcons = function (item) {
         return {
             assetId: assetId,
             assetType: getAssetTypeForFileExtension(fileExtension),
-            assetServiceUri: `https://cdn.assets.scratch.mit.edu/internalapi/asset/${md5ext}/get/`
+            assetServiceUri: `${libraryAssetHost}/internalapi/asset/${md5ext}/get/`
         };
     }
 };
@@ -274,7 +275,8 @@ class LibraryComponent extends React.Component {
     }
     renderElement (data) {
         const key = this.constructKey(data);
-        const icons = getItemIcons(data);
+        const libraryAssetHost = this.props.libraryAssetHost || 'https://cdn.assets.scratch.mit.edu';
+        const icons = getItemIcons(data, libraryAssetHost);
         return (<LibraryItem
             bluetoothRequired={data.bluetoothRequired}
             collaborator={data.collaborator}
@@ -415,6 +417,7 @@ LibraryComponent.propTypes = {
     withCategories: PropTypes.bool,
     id: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
+    libraryAssetHost: PropTypes.string,
     onItemMouseEnter: PropTypes.func,
     onItemMouseLeave: PropTypes.func,
     onItemSelected: PropTypes.func,

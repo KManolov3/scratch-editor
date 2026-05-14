@@ -56,6 +56,7 @@ class CostumeLibrary extends React.PureComponent {
             <LibraryComponent
                 data={data}
                 id="costumeLibrary"
+                libraryAssetHost={this.props.libraryAssetHost}
                 tags={spriteTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelected}
@@ -66,12 +67,14 @@ class CostumeLibrary extends React.PureComponent {
 };
 
 const mapStateToProps = state => ({
-    dynamicCostumes: state.scratchGui.dynamicAssets.costumes
+    dynamicCostumes: state.scratchGui.dynamicAssets.costumes,
+    libraryAssetHost: state.scratchGui.config.storage.libraryAssetHost
 });
 
 CostumeLibrary.propTypes = {
     dynamicCostumes: PropTypes.arrayOf(costumeShape),
     intl: intlShape.isRequired,
+    libraryAssetHost: PropTypes.string,
     onRequestClose: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired
 };
